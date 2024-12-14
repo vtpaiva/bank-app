@@ -1,0 +1,7 @@
+{% if clients %}
+    {% for client in clients %}
+        <li>
+            <strong>Name:</strong> {{ client.name }}<br><br>
+        </li>
+    {% endfor %}
+{% endif %}
