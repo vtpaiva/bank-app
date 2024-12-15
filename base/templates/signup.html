@@ -1,0 +1,102 @@
+{% extends 'main.html' %}
+
+{% block navbar_links %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="form-container">
+    <form method="POST">
+        {% csrf_token %}
+        
+        {{ form }}
+        <input type="submit" value="Register" class="form-submit">
+    </form>
+
+    <a href="{% url 'login' %}"><br>Already have an account?</a>
+</div>
+
+<style>
+    .form-container {
+        width: 100%;
+        max-width: 400px;
+        margin: 30px auto;
+        padding: 15px 20px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-container form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .form-container input[type="text"],
+    .form-container input[type="password"],
+    .form-container input[type="email"],
+    .form-container input[type="submit"],
+    .form-container select,
+    .form-container textarea {
+        width: 100%; /* Largura uniforme */
+        height: 42px; /* Altura uniforme */
+        padding: 0 10px; /* Espaçamento horizontal */
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 1rem;
+        color: #333;
+        background-color: #f9f9f9;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-container input[type="text"]:focus,
+    .form-container input[type="password"]:focus,
+    .form-container input[type="email"]:focus,
+    .form-container input[type="submit"]:focus,
+    .form-container select:focus,
+    .form-container textarea:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
+        outline: none;
+    }
+
+    .form-container label {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 5px;
+    }
+
+    .form-container input[type="submit"] {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-container input[type="submit"]:hover {
+        background-color: #0056b3;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .form-container input[type="submit"]:active {
+        background-color: #004080;
+    }
+
+    .error-message {
+        color: #d9534f;
+        font-size: 0.9rem;
+        margin-top: 5px;
+    }
+
+    .form-container p {
+        margin-bottom: 0.8rem;
+        font-size: 0.95rem;
+        color: #666;
+    }
+</style>
+
+{% endblock %}

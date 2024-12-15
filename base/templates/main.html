@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MicroBank</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', Arial, Helvetica, sans-serif; 
+            background-color: #f4f4f9;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center; 
+            align-items: center;
+            background-color: #007bff; 
+            padding: 1rem 2rem;
+            color: #fff;
+            border-bottom-left-radius: 20px; 
+            border-bottom-right-radius: 20px; 
+            box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1); 
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            font-size: 2rem;
+            font-weight: 600; 
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .navbar-brand img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .navbar-links {
+            position: absolute;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .login-link {
+            display: flex;
+            align-items: center;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-link img {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+        }
+
+        .login-link:hover {
+            background-color: #0056b3;
+        }
+
+        @media (max-width: 768px) {
+            .navbar-links {
+                display: none; 
+            }
+
+            .navbar-toggle {
+                display: block;
+                cursor: pointer;
+            }
+
+            .navbar.active .navbar-links {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        .navbar-toggle {
+            display: none;
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        main {
+            padding: 5rem 2rem 2rem 2rem;
+            flex: 1;
+            text-align: center;
+        }
+
+        main h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        main p {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        footer {
+            background-color: #ffffff;
+            color: #333;
+            text-align: center;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 2%;
+            right: 2%;
+            height: 3px;
+            background-color: #007bff;
+            border-radius: 5px;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+            margin-right: 20px;
+            text-align: right;
+        }
+
+        footer a {
+            color: #007bff;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="{% url 'home' %}" class="navbar-brand">
+            <img src="https://img.icons8.com/ios-glyphs/60/ffffff/money.png" alt="Currency Icon">
+            MicroBank
+        </a>
+
+        <div class="navbar-toggle" id="navbar-toggle">
+            ☰
+        </div>
+
+        <div class="navbar-links">
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'logout' %}" class="login-link">
+                    <img src="https://img.icons8.com/ios-glyphs/30/ffffff/user.png" alt="Login Icon">
+                    Logout
+                </a>
+            {% else %}
+                <a href="{% url 'login' %}" class="login-link">
+                    <img src="https://img.icons8.com/ios-glyphs/30/ffffff/user.png" alt="Login Icon">
+                    Login
+                </a>
+            {% endif %}
+
+            {% block navbar_links %}
+            {% endblock %}
+        </div>
+    </nav>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>© 2024 MicroBank - All rights reserved.</p>
+    </footer>
+</body>
+</html>
