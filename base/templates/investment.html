@@ -1,0 +1,159 @@
+{% extends 'main.html' %}
+
+{% block navbar_links %}
+
+{% endblock %}
+
+{% block content %}
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="error-message">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% if options %}
+    <div class="investment-options-container">
+        <div class="investment-options">
+            {% for option in options %}
+                {% if option.quantity > 0 %}
+                    <div class="investment-option-container">
+                        <img src="{{ option.image }}" alt="Investment Image" class="investment-image">
+                        <div class="investment-details">
+                            <p><strong>Name:</strong> {{ option.name }}</p>
+                            <p><strong>Price:</strong> R$ {{ option.price }}</p>
+                            <p><strong>Quantity:</strong> {{ option.quantity }}</p>
+                            <p><strong>Monthly Profitability:</strong> {{ option.month_profitability }} * 100%</p>
+                            <p><strong>Risk:</strong> {{ option.risk }} / 10</p>
+                            <p><strong>Liquidity:</strong> {{ option.liquidity }}</p>
+                        </div>
+                        <form action="" method="post" class="buy-form">
+                            {% csrf_token %}
+                            <label for="quantity_{{ option.id }}">Quantity:</label>
+                            <input type="number" id="quantity_{{ option.id }}" name="quantity" min="1" step="1" max="{{ option.quantity }}" required>
+                            <input type="hidden" name="option_id" value="{{ option.id }}">
+                            <button type="submit" class="buy-button">Buy</button>
+                        </form>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% else %}
+    <div class="error-message">
+        No options avaiable.
+    </div>
+{% endif %}
+
+<style>
+    .error-message {
+        background-color: #ff4c4c; /* Vermelho forte */
+        color: #ffffff !important; /* Texto branco forçado */
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        font-size: 1.2rem; /* Tamanho maior da fonte */
+        font-weight: bold; /* Deixa o texto mais visível */
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 0.5s ease;
+        max-width: 50%;
+        margin-right: auto;
+        margin-left: auto;
+        margin-top: 10px;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .investment-options-container {
+        width: 100%;
+        overflow-x: auto;
+        padding: 20px 0;
+    }
+
+    .investment-options {
+        display: flex;
+        gap: 20px;
+    }
+
+    .investment-option-container {
+        background-color: #f4f4f9;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 300px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        flex: 0 0 auto; 
+    }
+
+    .investment-option-container:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .investment-image {
+        width: 100%;
+        height: 200px;
+        border-radius: 10px 10px 0 0;
+        object-fit: contain;
+    }
+
+    .investment-details {
+        padding: 10px 0;
+    }
+
+    .investment-details p {
+        margin: 10px 0;
+        font-size: 1rem;
+        color: #333;
+    }
+
+    .investment-details strong {
+        color: #007bff;
+    }
+
+    .buy-form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .buy-form label {
+        font-size: 1rem;
+        color: #333;
+    }
+
+    .buy-form input[type="number"] {
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .buy-button {
+        padding: 10px;
+        font-size: 1rem;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .buy-button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+{% endblock %}

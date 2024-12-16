@@ -7,8 +7,277 @@
 {% block content %}
 
 {% if request.user.is_authenticated %}
-    <h2>Hello, {{request.user.first_name}}</h2>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Poppins', Arial, Helvetica, sans-serif; 
+        background-color: #eef2f3;
+        color: #333;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    main {
+        padding: 5rem 2rem 2rem 2rem;
+        flex: 1;
+        text-align: center;
+    }
+
+    .greeting {
+        font-size: 2.5rem;
+        color: #007bff;
+        margin-bottom: 2rem;
+        position: relative;
+    }
+
+    .greeting::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 30%;
+        height: 4px;
+        background-color: #007bff;
+        border-radius: 5px;
+    }
+
+    .user-info {
+        background-color: #ffffff;
+        padding: 2.5rem;
+        border-radius: 20px;
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+        max-width: 80%;
+        margin: 2rem auto;
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: nowrap;
+        position: relative;
+    }
+
+    .user-info-container {
+        background-color: #f0f4f8;
+        padding: 1.5rem;
+        border-radius: 15px;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        flex-grow: 1;
+        margin: 0 1rem;
+        text-align: center;
+        position: relative;
+    }
+
+    .user-info-container:hover .tooltip {
+        display: block;
+    }
+
+    .tooltip {
+        display: none;
+        position: absolute;
+        bottom: 110%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #fff;
+        color: #333;
+        padding: 10px;
+        border-radius: 8px;
+        width: 180px;
+        text-align: center;
+        font-size: 0.9rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .user-info-container strong {
+        color: #007bff;
+    }
+
+    .user-actions {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 2rem;
+        max-width: 53%;
+        margin-left: auto;
+        margin-right: auto;
+        gap: 0.5rem;
+    }
+
+    .user-action {
+        background-color: #007bff;
+        color: #fff;
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .user-action:hover {
+        background-color: #0056b3;
+        transform: translateY(-5px);
+    }
+
+    .image-gallery {
+        display: flex;
+        overflow-x: auto;
+        padding: 2.5rem 0px 0px 0px;
+    }
+
+    .image-gallery a {
+        display: block;
+        position: relative;
+    }
+
+    .image-gallery img {
+        width: 600px;
+        height: 338px;
+        border-radius: 15px;
+        object-fit: cover;
+        margin-right: 1rem;
+        transition: filter 0.3s ease;
+    }
+
+    .image-gallery img:hover {
+        filter: brightness(70%);
+    }
+
+    .image-gallery .caption {
+        position: relative;
+    }
+
+    .image-gallery .caption p {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        background-color: rgba(0, 0, 0, 0.6);
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 0.9rem;
+    }
+
+    .success-message {
+        background-color: #00b846; /* Verde forte */
+        color: #ffffff !important; /* Texto branco forçado */
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        font-size: 1.2rem; /* Tamanho maior da fonte */
+        font-weight: bold; /* Deixa o texto mais visível */
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 0.5s ease, fadeOut 1s ease 3s forwards;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 40%;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeOut {
+        from { opacity: 1; }
+        to { opacity: 0; }
+    }
+
+    .success-message {
+        animation: fadeIn 0.5s ease;
+    }
+
+    .success-message.fade-out {
+        opacity: 0;
+        height: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow: hidden;
+        transition: opacity 1s ease, height 1s ease, padding 1s ease, margin 1s ease;
+    }
+</style>
+<body>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const successMessages = document.querySelectorAll('.success-message');
+            successMessages.forEach(message => {
+                setTimeout(() => {
+                    message.classList.add('fade-out');
+                    setTimeout(() => {
+                        message.remove(); 
+                    }, 1000); 
+                }, 3000); 
+            });
+        });
+    </script>    
+
+<div class="greeting">
+    Hello, {{ user.first_name }}!
+</div>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="success-message">
+            {{ message }}
+        </div>
+    {% endfor %}
 {% endif %}
+
+<div class="user-info">
+    <div class="user-info-container">
+        <p><strong>CPF:</strong> {{ user.CPF|slice:"0:3" }}.{{ user.CPF|slice:"3:6" }}.{{ user.CPF|slice:"6:9" }}-{{ user.CPF|slice:"9:11" }}</p>
+        <div class="tooltip">This field is your unique taxpayer identifier.</div>
+    </div>
+    <div class="user-info-container">
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <div class="tooltip">This is your registered email address.</div>
+    </div>
+    <div class="user-info-container">
+        <p><strong>Balance:</strong> R$ {{ user.balance }}</p>
+        <div class="tooltip">This shows your current account balance.</div>
+    </div>
+    <div class="user-info-container">
+        <p><strong>Score:</strong> {{ user.score }}</p>
+        <div class="tooltip">This represents your account score based on usage. Make transactions to improve your score.</div>
+    </div>
+</div>
+
+<div class="user-actions">
+    <a href="{% url 'deposit' %}" class="user-action">Deposit</a>
+    <a href="{% url 'transfer' %}" class="user-action">Transfer</a>
+    <a href="{% url 'investment' %}" class="user-action">Investment</a>
+    <a href="{% url 'insurance' %}" class="user-action">Insurance</a>
+    <a href="#" class="user-action">Exchange</a>
+</div>
+
+<div class="image-gallery">
+    <div class="caption">
+        <img src="https://static.todamateria.com.br/upload/pa/is/paisagem-natural-og.jpg" alt="Image 1">
+        <p>Unforgettable travels</p>
+    </div>
+    <div class="caption">
+        <img src="https://images.unsplash.com/photo-1536286144513-881bfbd3f292?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y2l0eSUyMGF0JTIwbmlnaHR8ZW58MHx8MHx8fDA%3D" alt="Image 2">
+        <p>Partying</p>
+    </div>
+    <div class="caption">
+        <img src="https://previews.123rf.com/images/freeartist/freeartist1612/freeartist161200015/68053070-tropical-chilling-out-serene-beaches-of-mauritius-island.jpg" alt="Image 3">
+        <p>Unique vacations</p>
+    </div>
+    <div class="caption">
+        <img src="https://w.litour.cn/img/huangshan/yellow-moutain/yellow-moutain-2.jpg" alt="Image 4">
+        <p>Financial freedom</p>
+    </div>
+</div>
+
+</body>
+
+{% else %}
 
 <h2 class="carousel-title">Our services</h2>
 
@@ -19,16 +288,16 @@
             <div class="carousel-caption">Loan</div>
         </div>
         <div class="carousel-item">
-            <img src="https://www.sincor.org.br/wp-content/uploads/2018/12/pessoas-790x400.jpg" alt="Seguro">
+            <img src="https://www.sincor.org.br/wp-content/uploads/2018/12/pessoas-790x400.jpg" alt="Insurance">
             <div class="carousel-caption">Insurance</div>
         </div>
         <div class="carousel-item">
-            <img src="https://cdn.borainvestir.b3.com.br/borainvestir/2022/08/19170537/escolhendo-corretoras-de-investimentos.jpg.webp" alt="Investiment">
+            <img src="https://cdn.borainvestir.b3.com.br/borainvestir/2022/08/19170537/escolhendo-corretoras-de-investimentos.jpg.webp" alt="Investment">
             <div class="carousel-caption">Investment</div>
         </div>
         <div class="carousel-item">
             <img src="https://exchangenow.net/upload/contrato_de_cambio.jpg" alt="Exchange">
-            <div class="carousel-caption">Exchage</div>
+            <div class="carousel-caption">Exchange</div>
         </div>
         <div class="carousel-item">
             <img src="https://plantaocontabil.com.br/blog/wp-content/uploads/2021/11/handshaking-in-office-2021-08-26-15-29-32-utc.jpg" alt="Transfer">
@@ -41,19 +310,46 @@
     </div>
 </div>
 
+<section class="feature-section">
+    <h2>Why Choose Us?</h2>
+    <div class="feature-container">
+        <div class="feature-item">
+            <img src="https://img.icons8.com/ios-filled/50/ffffff/money.png" alt="Low Fees">
+            <h3>Low Fees</h3>
+            <p>Enjoy competitive rates on all your financial transactions.</p>
+        </div>
+        <div class="feature-item">
+            <img src="https://img.icons8.com/ios-filled/50/ffffff/approval.png" alt="Security">
+            <h3>Security</h3>
+            <p>Your data and money are always protected with top-level encryption.</p>
+        </div>
+        <div class="feature-item">
+            <img src="https://img.icons8.com/ios-filled/50/ffffff/headset.png" alt="24/7 Support">
+            <h3>24/7 Support</h3>
+            <p>Our support team is always ready to help you with your financial needs.</p>
+        </div>
+    </div>
+</section>
+
+<section class="cta-banner">
+    <h2>Ready to Take Control of Your Finances?</h2>
+    <p>Join our platform today and experience a new way to manage your money.</p>
+    <a href="{% url 'signup' %}"><button class="cta-button">Get Started</button></a>
+</section>
+
 <style>
     .carousel-title {
         text-align: center;
         font-size: 2rem;
         font-weight: bold;
-        margin-bottom: 20px;
+        padding-top: 20px;
         color: #333;
     }
 
     .carousel-container {
         width: 100%;
         max-width: 800px;
-        margin: 50px auto;
+        margin: 20px auto;
         overflow: hidden;
         position: relative;
         border-radius: 20px;
@@ -69,7 +365,6 @@
         min-width: 100%;
         height: 400px;
         position: relative;
-        margin-right: 20px;
     }
 
     .carousel-item img {
@@ -108,11 +403,99 @@
         cursor: pointer;
         padding: 10px;
         border-radius: 50%;
-        transition: background-color 0.3s;
     }
 
-    .carousel-button:hover {
-        background-color: rgba(0, 0, 0, 0.7);
+    .feature-section {
+        padding: 50px 0;
+        background-color: #f4f4f9;
+        text-align: center;
+    }
+
+    .feature-container {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .feature-item {
+        background-color: #007bff;
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        width: 30%;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-item img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .feature-item p {
+        padding-top: 10px;
+        color: white;
+    }
+
+    .cta-banner {
+        background-color: white;
+        color: #007bff;
+        text-align: center;
+        padding: 40px 20px;
+        margin: 00px auto;
+        border-radius: 20px;
+        max-width: 50%;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .cta-button {
+        padding: 15px 30px;
+        border: 0px;
+        background-color: #007bff;
+        color: white;
+        font-size: 1.2rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        margin-top: 20px;
+    }
+
+    .cta-button:hover {
+        background-color: #0372e9;
+    }
+
+    .footer {
+        background-color: #007bff;
+        color: white;
+        padding: 50px 20px;
+    }
+
+    .footer-content {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .footer-section h3 {
+        margin-bottom: 10px;
+    }
+
+    .footer-section p, .footer-section ul {
+        margin-bottom: 10px;
+    }
+
+    .footer-section ul li {
+        list-style: none;
+    }
+
+    .footer-section ul li a {
+        color: white;
+        text-decoration: none;
+    }
+
+    .footer-bottom {
+        text-align: center;
+        padding-top: 20px;
     }
 </style>
 
@@ -124,7 +507,7 @@
     let currentIndex = 0;
 
     function updateCarouselPosition() {
-        const itemWidth = items[0].offsetWidth + 20; // Image width + margin
+        const itemWidth = items[0].offsetWidth; 
         track.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
     }
 
@@ -146,5 +529,7 @@
 
     window.addEventListener('resize', updateCarouselPosition);
 </script>
+
+{% endif %}
 
 {% endblock %}

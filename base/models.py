@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.timezone import now
 from django.contrib.auth.models import AbstractUser, Group, Permission, BaseUserManager
 from django.core.validators import MaxValueValidator, MinValueValidator
 
@@ -56,4 +57,70 @@ class User(AbstractUser):
     objects = UserManager()
 
     def __str__(self):
-        return f'User\'s CPF: {self.CPF} User\'s password: {self.password}.'
+        return f'User\'s CPF: {self.CPF}'
+    
+class InvestmentOption(models.Model):
+    name = models.CharField(
+        max_length=64
+    )
+    price = models.DecimalField(
+        max_digits=15,
+        decimal_places=2,
+        validators=[
+            MinValueValidator(0.0)
+        ]
+    )
+    quantity = models.PositiveIntegerField(
+        default=0
+    )
+    month_profitability = models.DecimalField(
+        max_digits=3,
+        decimal_places=2,
+        validators=[
+            MinValueValidator(0.0),
+            MaxValueValidator(1.0)
+        ]
+    )
+    risk = models.DecimalField(
+        max_digits=4,
+        decimal_places=2,
+        validators=[
+            MinValueValidator(0.0),
+            MaxValueValidator(10.0)
+        ]
+    )
+    liquidity = models.DateField(
+        validators=[MinValueValidator(now().date())]
+    )
+    image = models.URLField()
+
+    def __str__(self):
+        return f'Option\'s ID: {self.id}'
+    
+class InsuranceOption(models.Model):
+    price = models.DecimalField(
+        max_digits=15,
+        decimal_places=2,
+        validators=[
+            MinValueValidator(0.0)
+        ]
+    )
+    category = models.CharField(
+        max_length=32,
+        default='General'
+    )
+    min_score = models.DecimalField(
+        max_digits=4,
+        decimal_places=2, 
+        default=0.0,
+        validators=[
+            MinValueValidator(0.00),
+            MaxValueValidator(10.00)
+        ]
+    )
+
+    def __str__(self):
+        return f'Option\'s ID: {self.id}'
+    
+    def __repr__(self):
+        return 'Insurance option'

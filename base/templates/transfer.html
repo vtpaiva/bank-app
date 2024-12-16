@@ -1,9 +1,5 @@
 {% extends 'main.html' %}
 
-{% block navbar_links %}
-
-{% endblock %}
-
 {% block content %}
 
 <div class="form-container">
@@ -17,17 +13,15 @@
 
     <form method="POST" action="">
         {% csrf_token %}
-        
-        <label for="CPF">CPF</label>
-        <input type="text" name="CPF" id="CPF" placeholder="Enter your CPF" required>
 
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" placeholder="Enter your password" required>
+        <label for="destiny_cpf">Destiny</label>
+        <input type="text" name="destiny_cpf" id="destiny_cpf" placeholder="Enter the destiny CPF">
         
-        <input type="submit" value="Login">
+        <label for="transfer_amount">Transfer</label>
+        <input type="number" step="0.01" name="transfer_amount" id="transfer_amount" min="0.01" placeholder="Enter your transfer amount">
+        
+        <input type="submit" value="Transfer">
     </form>
-
-    <a href="{% url 'signup' %}"><br>Does not have an account?</a>
 </div>
 
 <style>
@@ -66,8 +60,7 @@
     }
 
     .form-container input[type="text"],
-    .form-container input[type="password"],
-    .form-container input[type="email"],
+    .form-container input[type="number"],
     .form-container input[type="submit"],
     .form-container select,
     .form-container textarea {

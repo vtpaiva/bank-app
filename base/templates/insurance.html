@@ -1,0 +1,189 @@
+{% extends 'main.html' %}
+
+{% block navbar_links %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="filter-container">
+    <form action="" method="GET" class="filter-form">
+        {% csrf_token %}
+
+        <div class="filter-group">
+            <label for="category">Category:</label>
+            <input type="text" id="category" name="category" placeholder="Enter category">
+        </div>
+        <div class="filter-group">
+            <label for="min_price">Min Price:</label>
+            <input type="number" id="min_price" name="min_price" min="0" step="0.01" placeholder="Min Price">
+        </div>
+        <div class="filter-group">
+            <label for="max_price">Max Price:</label>
+            <input type="number" id="max_price" name="max_price" min="0" step="0.01" placeholder="Max Price">
+        </div>
+        <div class="filter-group">
+            <label for="min_score">Min Score:</label>
+            <input type="number" id="min_score" name="min_score" min="0" max="10" step="0.01" placeholder="Min Score">
+        </div>
+        <button type="submit" class="filter-button">Apply Filters</button>
+    </form>
+</div>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="error-message">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% if options %}
+    <div class="insurance-options-container">
+        {% for option in options %}
+            <div class="insurance-option-container">
+                <div class="insurance-details">
+                    <p><strong>Category:</strong> {{ option.category }}</p>
+                    <p><strong>Price:</strong> R$ {{ option.price }}</p>
+                    <p><strong>Minimum Score Required:</strong> {{ option.min_score }} / 10</p>
+                </div>
+                <form action="" method="post" class="buy-form">
+                    {% csrf_token %}
+
+                    <input type="hidden" name="option_id" value="{{ option.id }}">
+                    <button type="submit" class="buy-button">Buy</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="error-message">
+        No options available.
+    </div>
+{% endif %}
+
+<style>
+    .filter-container {
+        width: 100%;
+        padding: 15px;
+        background-color: #0073ef;
+        border-radius: 10px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .filter-form {
+        display: flex;
+        gap: 20px;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .filter-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .filter-group label {
+        font-size: 1rem;
+        color: #ffffff;
+        margin-bottom: 5px;
+    }
+
+    .filter-group input {
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .filter-button {
+        padding: 10px 20px;
+        font-size: 1rem;
+        color: #007bff;
+        background-color: #ffffff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .filter-button:hover {
+        background-color: #e0e0e0;
+    }
+
+    .error-message {
+        background-color: #ff4c4c; 
+        color: #ffffff !important; 
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        font-size: 1.2rem; 
+        font-weight: bold; 
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 0.5s ease;
+        max-width: 50%;
+        margin-right: auto;
+        margin-left: auto;
+        margin-top: 10px;
+    }
+
+    .insurance-options-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 20px 0;
+    }
+
+    .insurance-option-container {
+        background-color: #f4f4f9;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 80%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .insurance-details {
+        display: flex;
+        gap: 20px;
+    }
+
+    .insurance-details p {
+        margin: 0 10px;
+        font-size: 1rem;
+        color: #333;
+    }
+
+    .insurance-details strong {
+        color: #007bff;
+    }
+
+    .buy-form {
+        display: flex;
+        align-items: center;
+    }
+
+    .buy-button {
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .buy-button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+{% endblock %}

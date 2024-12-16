@@ -15,3 +15,9 @@ To install django on the directory:
 ```bash
 pipenv install django
 ```
+
+To run the server
+
+```bash
+python manage.py runserver
+```
