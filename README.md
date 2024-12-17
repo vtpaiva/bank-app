@@ -1,6 +1,7 @@
 # MicroBank Web Application
+
 <p align="center">
-<img src="assets/logo.png" height="auto" width="300" style="border-radius:25px">
+<img src="assets/logo.png" style="border-radius:25px; height: auto; width: 400px;">
 </p>
 
 ## Overview
@@ -104,7 +105,7 @@ The Transaction History enables users to track their financial behavior and offe
 ### Classes
 
 <p align="center">
-<img src="assets/classes.png" height="auto" width="800" style="border-radius:25px">
+<img src="assets/classes.svg" style="border-radius:25px; height: auto; width: 800px;">
 </p>
 
 ---
