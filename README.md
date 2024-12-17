@@ -1,4 +1,4 @@
-# MicroBank Web Application
+# Microbank Web Application
 
 <p align="center">
 <img src="assets/logo.png" style="border-radius:25px; height: auto; width: 400px;">
@@ -6,7 +6,7 @@
 
 ## Overview
 
-MicroBank is a modern digital banking application that aims to provide a seamless, user-friendly, and secure financial experience. The platform allows users to manage their finances, execute a variety of financial transactions, and keep track of their activity history through an intuitive and interactive web interface. The main functionalities of MicroBank include Deposits, Transfers, Investments, Insurance, Loans, and a comprehensive Transaction History.
+***MicroBank*** is a **modern digital banking application** that aims to provide a **seamless** and **user-friendly** financial experience. The platform allows users to manage their finances, execute a variety of financial transactions, and keep track of their activity history through an intuitive and interactive *web* interface. The main functionalities of ***MicroBank*** include **Deposits**, **Transfers**, **Investments**, **Insurance**, **Loans**, and a comprehensive **Transaction History**.
 
 ### Colaborators
 
@@ -21,13 +21,13 @@ MicroBank is a modern digital banking application that aims to provide a seamles
 
 ---
 
-The MicroBank application is developed using modern, reliable, and widely adopted web development technologies.
+The ***MicroBank*** application is developed using **modern**, **reliable**, and widely adopted web development technologies.
 
-* Backend: The backend logic and database interactions are managed using Django, a powerful web framework written in Python. Django's ORM (Object-Relational Mapper) facilitates efficient data management, while its security features ensure a safe and secure platform for users.
+* **Backend**: The backend logic and database interactions are managed using Django, a powerful web framework written in Python. ***Django***'s ORM (Object-Relational Mapper) facilitates efficient data management, while its security features ensure a safe and secure platform for users.
 
-* Frontend: The user interface is built using HTML, CSS, and JavaScript. This stack allows for responsive design, smooth interactivity, and a visually appealing experience for users on desktop and mobile devices.
+* **Frontend**: The user interface is built using HTML, CSS, and JavaScript. This stack allows for responsive design, smooth interactivity, and a visually appealing experience for users on desktop and mobile devices.
 
-Django's built-in templates are used to render the HTML views dynamically, allowing for clean and maintainable code. JavaScript is utilized to enhance interactivity and handle client-side logic, while CSS ensures an attractive and consistent design.
+***Django***'s built-in templates are used to render the ***HTML*** views dynamically, allowing for clean and maintainable code. ***JavaScript*** is utilized to enhance interactivity and handle client-side logic, while ***CSS*** ensures an attractive and consistent design.
 
 ### How to run
 
@@ -57,7 +57,7 @@ python manage.py runserver
 
 * #### **Deposit**
 
-Users can securely deposit funds into their MicroBank accounts using various payment methods. The deposit process is quick and user-friendly, with support for multiple payment methods like bank transfers, credit cards, and PIX (Brazilian instant payment system).
+Users can securely deposit funds into their ***MicroBank*** accounts using various payment methods. The deposit process is quick and user-friendly, with support for multiple payment methods like bank transfers, credit cards, and *PIX* (Brazilian instant payment system).
 
 **How it works:**
 1. The user selects the deposit method.
@@ -68,7 +68,7 @@ This feature provides flexibility and convenience, allowing users to top up thei
 
 * #### **Transfer**
 
-MicroBank allows users to send money to other users of the platform. Transfers are processed in real-time, ensuring immediate availability of funds for the recipient. Users can manage their transfer history and view details of past transactions.
+***MicroBank*** allows users to send money to other users of the platform. Transfers are processed in real-time, ensuring immediate availability of funds for the recipient. Users can manage their transfer history and view details of past transactions.
 
 **How it works:**
 1. The user enters the recipient’s CPF (National Taxpayer Registration) or selects a contact from their saved list.
@@ -89,7 +89,7 @@ Investments are displayed with essential data, such as profitability percentage,
 
 * #### **Insurance**
 
-MicroBank offers a range of insurance policies that users can subscribe to, covering health, travel, property, and other key areas. Users can view available insurance options, check their coverage details, and purchase policies directly through the platform.
+***MicroBank*** offers a range of insurance policies that users can subscribe to, covering health, travel, property, and other key areas. Users can view available insurance options, check their coverage details, and purchase policies directly through the platform.
 
 **How it works:**
 1. Users browse through the list of insurance options.
@@ -100,7 +100,7 @@ This functionality enables users to secure their future and protect their assets
 
 * #### **Loan**
 
-Users can request loans directly through the MicroBank platform. The system calculates the maximum loan amount based on the user's balance and score. The loan application process includes selecting the amount, number of installments, and reviewing the interest rate.
+Users can request loans directly through the ***MicroBank*** platform. The system calculates the maximum loan amount based on the user's balance and score. The loan application process includes selecting the amount, number of installments, and reviewing the interest rate.
 
 **How it works:**
 1. Users select the loan amount and the number of installments.
@@ -110,7 +110,7 @@ Loan options include different repayment periods and interest rates, which are d
 
 * #### **Transaction History**
 
-MicroBank provides users with a comprehensive transaction history that tracks every financial activity. Users can review their deposits, transfers, investments, insurance purchases, and loan repayments in a single, well-organized view. Each transaction displays key details such as date, value, and relevant information about the action taken.
+***MicroBank*** provides users with a comprehensive transaction history that tracks every financial activity. Users can review their deposits, transfers, investments, insurance purchases, and loan repayments in a single, well-organized view. Each transaction displays key details such as date, value, and relevant information about the action taken.
 
 **Transaction Types:**
 - **Deposits**
@@ -126,7 +126,7 @@ MicroBank provides users with a comprehensive transaction history that tracks ev
 The Transaction History enables users to track their financial behavior and offers transparency for financial planning and dispute resolution.
 
 ### User Benefits
-* **Comprehensive Services**: MicroBank offers a full suite of financial services in one app.
+* **Comprehensive Services**: ***MicroBank*** offers a full suite of financial services in one app.
 * **User-Friendly Interface**: The platform’s intuitive design and user experience make it easy for users to manage their finances.
 * **Real-Time Notifications**: Users receive instant updates on all financial activities.
 
@@ -144,4 +144,4 @@ The project was made based on the following classes model:
 
 ---
 
-<a href="https://www.djangoproject.com/">📚 Django Documentation</a>
+📚 <a href="https://www.djangoproject.com/">Django Documentation</a>
