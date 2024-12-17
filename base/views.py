@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import Http404, HttpResponse
 
-from .models import User, InvestmentOption, InsuranceOption
+from .models import User, InvestmentOption, InsuranceOption, Transaction, TransactionExecuted, TransferOption, DepositOption, LoanOption
 from .forms import SignUpForm
 
 def home(request):
@@ -37,13 +37,18 @@ def registerPage(request):
 
     if request.method == 'POST':
         form = SignUpForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.save()
-            login(request, user)
-            return redirect('home')
-        else:
-            messages.error(request, 'An error occurred during registration')
+        try:
+
+            if form.is_valid():
+                user = form.save(commit=False)
+                user.save()
+                login(request, user)
+                return redirect('home')
+            else:
+                raise ValueError('Invalid form.')
+            
+        except ValueError as e:
+            messages.error(request, e)
 
     return render(request, 'signup.html', {'form': form})
 
@@ -52,20 +57,43 @@ def depositPage(request):
     if request.method == 'POST':
         try:
             deposit_amount = request.POST['deposit_amount']
+            deposit_method = request.POST['deposit_method']
 
             if deposit_amount == '':
                 raise ValueError('Insert the values correctly.')
+            
+            deposit_amount = Decimal(deposit_amount)
 
-            if(float(deposit_amount) <= 0):
+            if(deposit_amount <= 0):
                 raise ValueError('Only positive values accepted.')
 
-            request.user.balance += Decimal(deposit_amount)
-            request.user.score = min(10.00, Decimal(deposit_amount)/1000 + request.user.score)
+            request.user.balance += deposit_amount
+            request.user.score = min(10.00, deposit_amount/1000 + request.user.score)
             request.user.save()
 
             messages.error(request, 'Deposit succeded.')
 
+            new_option = DepositOption(
+                value=deposit_amount,
+                method=deposit_method
+            )
+            new_option.save()
+
+            new_transaction = Transaction(
+                value=deposit_amount,
+                user=request.user
+            )
+            new_transaction.save()
+
+            execution = TransactionExecuted(
+                transaction=new_transaction,
+                option=new_option,
+                quantity=1
+            )
+            execution.save()
+
             return redirect('home')
+        
         except ValueError as e:
             messages.error(request, e)
 
@@ -80,25 +108,47 @@ def transferPage(request):
 
             if destiny_cpf == '' or transfer_amount == '':
                 raise ValueError('Insert the values correctly.')
+            
+            transfer_amount = Decimal(transfer_amount)
 
             destiny_user = get_object_or_404(User, CPF=destiny_cpf)
 
             if(Decimal(request.user.balance) < float(transfer_amount)):
                 raise ValueError('Balance is less than value.')
 
-            request.user.balance -= Decimal(transfer_amount)
-            request.user.score = min(10.00, Decimal(transfer_amount)/1000 + request.user.score)
-            destiny_user.balance += Decimal(transfer_amount)
-
+            request.user.decrease_balance(transfer_amount)
+            request.user.update_score(transfer_amount)
             request.user.save()
+            
+            destiny_user.add_balance(transfer_amount)
             destiny_user.save()
             
             messages.error(request, 'Tranfer succeded.')
 
+            new_option = TransferOption(
+                value=transfer_amount,
+                destiny=destiny_user
+            )
+            new_option.save()
+
+            new_transaction = Transaction(
+                value=transfer_amount,
+                user=request.user
+            )
+            new_transaction.save()
+
+            execution = TransactionExecuted(
+                transaction=new_transaction,
+                option=new_option,
+                quantity=1
+            )
+            execution.save()
+
             return redirect('home')
+        
         except ValueError  as e:
             messages.error(request, e)
-        except Http404 as he:
+        except Http404:
             messages.error(request, 'No user found with given CPF.')
 
     return render(request, 'transfer.html')
@@ -119,19 +169,34 @@ def investmentPage(request):
             if (quantity > option.quantity):
                 raise ValueError('Quantity greater than avaiable.')
 
-            total_value = Decimal(quantity) * Decimal(option.price)
+            total_value = Decimal(quantity) * Decimal(option.value)
 
             if total_value > request.user.balance:
                 raise ValueError('Balance is less than total value.')
             
-            request.user.balance -= total_value
-            option.quantity -= quantity
+            messages.success(request, 'Investment succed.')
+            
+            request.user.decrease_balance(total_value)
             request.user.save()
+
+            option.decrease_quantity(quantity)
             option.save()
 
-            messages.success(request, 'Investment succed.')
+            new_transaction = Transaction(
+                value=total_value,
+                user=request.user
+            )
+            new_transaction.save()
+
+            execution = TransactionExecuted(
+                transaction=new_transaction,
+                option=option,
+                quantity=quantity
+            )
+            execution.save()
 
             return redirect('home')
+        
         except ValueError as e:
             messages.error(request, e)
 
@@ -149,9 +214,9 @@ def insurancePage(request):
     if category:
         options = options.filter(category__icontains=category)  # busca parcial de texto
     if min_price:
-        options = options.filter(price__gte=min_price)
+        options = options.filter(value__gte=min_price)
     if max_price:
-        options = options.filter(price__lte=max_price)
+        options = options.filter(value__lte=max_price)
     if min_score:
         options = options.filter(min_score__lte=min_score)
 
@@ -166,14 +231,29 @@ def insurancePage(request):
             user = request.user
             option = InsuranceOption.objects.get(id=option_id)
 
-            if(user.balance < option.price):
+            if(user.balance < option.value):
                 raise ValueError('Balance is less than value.')
 
             if(user.score < option.min_score):
                 raise ValueError('Minimum score was not reached.')
 
-            request.user.balance -= InsuranceOption.objects.get(id=option_id).price
-            request.user.save()
+            user.decrease_balance(option.value)
+            user.save()
+
+            messages.success(request, 'Insurance succed')
+
+            new_transaction = Transaction(
+                value=option.value,
+                user=request.user
+            )
+            new_transaction.save()
+
+            execution = TransactionExecuted(
+                transaction=new_transaction,
+                option=option,
+                quantity=1
+            )
+            execution.save()
 
             return redirect('home')
         
@@ -181,3 +261,53 @@ def insurancePage(request):
             messages.error(request, e)
 
     return render(request, 'insurance.html', context)
+
+@login_required(login_url='login')
+def historyPage(request):
+    context = {
+        'transactions': Transaction.objects.filter(user=request.user).prefetch_related('executed_option__option')
+    }
+
+    return render(request, 'history.html', context)
+
+@login_required(login_url='login')
+def loanPage(request):
+        
+    context = {
+        'options': LoanOption.objects.all()
+    }
+
+    if request.method == 'POST':
+        try:
+            option_id = request.POST.get('option_id')
+
+            loan_option = LoanOption.objects.get(id=option_id)
+            user = request.user
+
+            if(user.score < loan_option.min_score):
+                raise ValueError('Minimum score was not reached.')
+
+            user.add_balance(loan_option.value)
+            user.save()
+
+            messages.success(request, 'Loan succed')
+
+            new_transaction = Transaction(
+                value=loan_option.value,
+                user=request.user
+            )
+            new_transaction.save()
+
+            execution = TransactionExecuted(
+                transaction=new_transaction,
+                option=loan_option,
+                quantity=1
+            )
+            execution.save()
+
+            return redirect('home')
+
+        except ValueError as e:
+            messages.error(request, e)
+
+    return render(request, 'loan.html', context)

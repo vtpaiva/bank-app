@@ -102,7 +102,7 @@
         justify-content: space-between;
         margin-top: 2rem;
         max-width: 40%;
-        margin-left: auto;
+        margin-left: 300px;
         margin-right: auto;
         gap: 0.5rem;
     }
@@ -218,7 +218,7 @@
     </script>    
 
 <div class="greeting">
-    Hello, {{ user.first_name }}!
+    Hello, {{ user.first_name }}  {{ user.last_name }}!
 </div>
 
 {% if messages %}
@@ -252,7 +252,9 @@
     <a href="{% url 'deposit' %}" class="user-action">Deposit</a>
     <a href="{% url 'transfer' %}" class="user-action">Transfer</a>
     <a href="{% url 'investment' %}" class="user-action">Investment</a>
+    <a href="{% url 'loan' %}" class="user-action">Loan</a>
     <a href="{% url 'insurance' %}" class="user-action">Insurance</a>
+    <a href="{% url 'history' %}" class="user-action">History</a>
 </div>
 
 <div class="image-gallery">

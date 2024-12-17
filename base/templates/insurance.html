@@ -6,6 +6,16 @@
 
 {% block content %}
 
+{% if messages %}
+    {% for message in messages %}
+        <div class="error-message">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<h2 class="page-title">Available Insurance Options</h2>
+
 <div class="filter-container">
     <form action="" method="GET" class="filter-form">
         {% csrf_token %}
@@ -44,7 +54,7 @@
             <div class="insurance-option-container">
                 <div class="insurance-details">
                     <p><strong>Category:</strong> {{ option.category }}</p>
-                    <p><strong>Price:</strong> R$ {{ option.price }}</p>
+                    <p><strong>Price:</strong> R$ {{ option.value }}</p>
                     <p><strong>Minimum Score Required:</strong> {{ option.min_score }} / 10</p>
                 </div>
                 <form action="" method="post" class="buy-form">
@@ -183,6 +193,23 @@
 
     .buy-button:hover {
         background-color: #0056b3;
+    }
+
+    .insurance-options-container::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .insurance-options-container::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    .insurance-options-container::-webkit-scrollbar-thumb {
+        background: #007bff;
+        border-radius: 8px;
+    }
+
+    .insurance-options-container::-webkit-scrollbar-thumb:hover {
+        background: #0056b3;
     }
 </style>
 

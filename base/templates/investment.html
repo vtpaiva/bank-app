@@ -14,6 +14,8 @@
     {% endfor %}
 {% endif %}
 
+<h2 class="page-title">Available Investment Options</h2>
+
 {% if options %}
     <div class="investment-options-container">
         <div class="investment-options">
@@ -23,9 +25,9 @@
                         <img src="{{ option.image }}" alt="Investment Image" class="investment-image">
                         <div class="investment-details">
                             <p><strong>Name:</strong> {{ option.name }}</p>
-                            <p><strong>Price:</strong> R$ {{ option.price }}</p>
+                            <p><strong>Price:</strong> R$ {{ option.value }}</p>
                             <p><strong>Quantity:</strong> {{ option.quantity }}</p>
-                            <p><strong>Monthly Profitability:</strong> {{ option.month_profitability }} * 100%</p>
+                            <p><strong>Monthly Profitability:</strong> {{ option.month_profitability }}/mo</p>
                             <p><strong>Risk:</strong> {{ option.risk }} / 10</p>
                             <p><strong>Liquidity:</strong> {{ option.liquidity }}</p>
                         </div>
@@ -48,26 +50,12 @@
 {% endif %}
 
 <style>
-    .error-message {
-        background-color: #ff4c4c; /* Vermelho forte */
-        color: #ffffff !important; /* Texto branco forçado */
-        padding: 15px;
-        border-radius: 8px;
-        margin-bottom: 10px;
-        font-size: 1.2rem; /* Tamanho maior da fonte */
-        font-weight: bold; /* Deixa o texto mais visível */
+    .page-title {
         text-align: center;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        animation: fadeIn 0.5s ease;
-        max-width: 50%;
-        margin-right: auto;
-        margin-left: auto;
-        margin-top: 10px;
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(-10px); }
-        to { opacity: 1; transform: translateY(0); }
+        font-size: 2rem;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 20px;
     }
 
     .investment-options-container {
@@ -153,6 +141,23 @@
 
     .buy-button:hover {
         background-color: #0056b3;
+    }
+
+    .investment-options-container::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .investment-options-container::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    .investment-options-container::-webkit-scrollbar-thumb {
+        background: #007bff;
+        border-radius: 8px;
+    }
+
+    .investment-options-container::-webkit-scrollbar-thumb:hover {
+        background: #0056b3;
     }
 </style>
 

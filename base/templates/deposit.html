@@ -1,6 +1,7 @@
 {% extends 'main.html' %}
 
 {% block content %}
+<h2 class="page-title">Deposit</h2>
 
 <div class="form-container">
     {% if messages %}
@@ -11,12 +12,20 @@
         {% endfor %}
     {% endif %}
 
+
     <form method="POST" action="">
         {% csrf_token %}
         
         <label for="deposit_amount">Deposit</label>
         <input type="number" step="0.01" name="deposit_amount" id="deposit_amount" min="0.01" placeholder="Enter your deposit amount">
         
+        <label for="deposit_method">Method</label>
+        <select name="deposit_method" id="deposit_method">
+            <option value="Bank Transfer">Bank Transfer</option>
+            <option value="Credit Card">Credit Card</option>
+            <option value="PIX">PIX</option>
+        </select>
+
         <input type="submit" value="Deposit">
     </form>
 </div>

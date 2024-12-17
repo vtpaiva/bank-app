@@ -10,4 +10,6 @@ urlpatterns = [
     path('transfer/', views.transferPage, name='transfer'),
     path('investment/', views.investmentPage, name='investment'),
     path('insurance/', views.insurancePage, name='insurance'),
+    path('loan/', views.loanPage, name='loan'),
+    path('history/', views.historyPage, name='history'),
 ]

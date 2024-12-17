@@ -6,7 +6,16 @@
 
 {% block content %}
 
+
 <div class="form-container">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="error-message">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    
     <form method="POST">
         {% csrf_token %}
         

@@ -1,0 +1,198 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<h1 class="page-title">Executed Transactions</h1>
+
+{% if transactions %}
+    <div class="transaction-sections">
+        <!-- Deposit Section -->
+        <div class="transaction-section">
+            <h2 class="section-title">Deposits</h2>
+            <div class="transaction-container">
+                {% for transaction in transactions %}
+                    {% for executed in transaction.executed_option.all %}
+                        {% if executed.option.polymorphic_ctype.model == 'depositoption' %}
+                            <div class="transaction-card deposit-container">
+                                <h3>Deposit</h3>
+                                <p><strong>Transaction ID:</strong> {{ transaction.id }}</p>
+                                <p><strong>Value:</strong> R$ {{ transaction.value }}</p>
+                                <p><strong>Date:</strong> {{ transaction.creation_data|date:"d/m/Y H:i" }}</p>
+                                <p><strong>Method:</strong> {{ executed.option.method }}</p>
+                                <p><strong>Quantity:</strong> {{ executed.quantity }}</p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Transfer Section -->
+        <div class="transaction-section">
+            <h2 class="section-title">Transfers</h2>
+            <div class="transaction-container">
+                {% for transaction in transactions %}
+                    {% for executed in transaction.executed_option.all %}
+                        {% if executed.option.polymorphic_ctype.model == 'transferoption' %}
+                            <div class="transaction-card transfer-container">
+                                <h3>Transfer</h3>
+                                <p><strong>Transaction ID:</strong> {{ transaction.id }}</p>
+                                <p><strong>Value:</strong> R$ {{ transaction.value }}</p>
+                                <p><strong>Date:</strong> {{ transaction.creation_data|date:"d/m/Y H:i" }}</p>
+                                <p><strong>Destination User:</strong> {{ executed.option.destiny.CPF }}</p>
+                                <p><strong>Quantity:</strong> {{ executed.quantity }}</p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Investment Section -->
+        <div class="transaction-section">
+            <h2 class="section-title">Investments</h2>
+            <div class="transaction-container">
+                {% for transaction in transactions %}
+                    {% for executed in transaction.executed_option.all %}
+                        {% if executed.option.polymorphic_ctype.model == 'investmentoption' %}
+                            <div class="transaction-card investment-container">
+                                <h3>Investment</h3>
+                                <p><strong>Transaction ID:</strong> {{ transaction.id }}</p>
+                                <p><strong>Value:</strong> R$ {{ transaction.value }}</p>
+                                <p><strong>Date:</strong> {{ transaction.creation_data|date:"d/m/Y H:i" }}</p>
+                                <p><strong>Option:</strong> {{ executed.option.name }}</p>
+                                <p><strong>Quantity:</strong> {{ executed.quantity }}</p>
+                                <p><strong>Monthly Profitability:</strong> {{ executed.option.month_profitability }}%</p>
+                                <p><strong>Risk:</strong> {{ executed.option.risk }} / 10</p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="transaction-section">
+            <h2 class="section-title">Loans</h2>
+            <div class="transaction-container">
+                {% for transaction in transactions %}
+                    {% for executed in transaction.executed_option.all %}
+                        {% if executed.option.polymorphic_ctype.model == 'loanoption' %}
+                            <div class="transaction-card loan-container">
+                                <h3>Loan</h3>
+                                <p><strong>Transaction ID:</strong> {{ transaction.id }}</p>
+                                <p><strong>Value:</strong> R$ {{ transaction.value }}</p>
+                                <p><strong>Date:</strong> {{ transaction.creation_data|date:"d/m/Y H:i" }}</p>
+                                <p><strong>Installments:</strong> {{ executed.option.installments }}</p>
+                                <p><strong>Interest Ratio:</strong> {{ executed.option.interest_ratio }}%</p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Insurance Section -->
+        <div class="transaction-section">
+            <h2 class="section-title">Insurances</h2>
+            <div class="transaction-container">
+                {% for transaction in transactions %}
+                    {% for executed in transaction.executed_option.all %}
+                        {% if executed.option.polymorphic_ctype.model == 'insuranceoption' %}
+                            <div class="transaction-card insurance-container">
+                                <h3>Insurance</h3>
+                                <p><strong>Transaction ID:</strong> {{ transaction.id }}</p>
+                                <p><strong>Value:</strong> R$ {{ transaction.value }}</p>
+                                <p><strong>Date:</strong> {{ transaction.creation_data|date:"d/m/Y H:i" }}</p>
+                                <p><strong>Category:</strong> {{ executed.option.category }}</p>
+                                <p><strong>Minimum Score Required:</strong> {{ executed.option.min_score }}</p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="error-message">No transactions found for this user.</div>
+{% endif %}
+
+<style>
+    .page-title {
+        text-align: center;
+        font-size: 2.5rem;
+        color: #007bff;
+        margin-top: 20px;
+    }
+
+    .loan-container {
+        border-left: 5px solid #fffb00;
+    }
+
+    .transaction-sections {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .transaction-section {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .section-title {
+        font-size: 2rem;
+        color: #007bff;
+        margin-bottom: 20px;
+    }
+
+    .transaction-container {
+        display: flex;
+        overflow-x: auto;
+        gap: 20px;
+    }
+
+    .transaction-card {
+        background-color: #f4f4f9;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 300px;
+        flex: 0 0 auto;
+    }
+
+    .deposit-container {
+        border-left: 5px solid #00b846;
+    }
+
+    .investment-container {
+        border-left: 5px solid #007bff;
+    }
+
+    .insurance-container {
+        border-left: 5px solid #ff9900;
+    }
+
+    .transfer-container {
+        border-left: 5px solid #ff4c4c;
+    }
+
+    .transaction-container::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .transaction-container::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    .transaction-container::-webkit-scrollbar-thumb {
+        background: #007bff;
+        border-radius: 8px;
+    }
+
+    .transaction-container::-webkit-scrollbar-thumb:hover {
+        background: #0056b3;
+    }
+</style>
+
+{% endblock %}
