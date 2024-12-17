@@ -10,10 +10,13 @@ MicroBank is a modern digital banking application that aims to provide a seamles
 
 ### Colaborators
 
-André Jacob Suaide - **13864673**
-Henrique de Oliveira Araújo - **13863950**
-Oliver Kenzo Kobayashi - **13676930**
-Vítor Augusto Paiva de Brito - **13732303**
+* André Jacob Suaide - **13864673**
+
+* Henrique de Oliveira Araújo - **13863950**
+
+* Oliver Kenzo Kobayashi - **13676930**
+
+* Vítor Augusto Paiva de Brito - **13732303**
 
 ### Technology Stack
 
@@ -24,6 +27,26 @@ The MicroBank application is developed using modern, reliable, and widely adopte
 * Frontend: The user interface is built using HTML, CSS, and JavaScript. This stack allows for responsive design, smooth interactivity, and a visually appealing experience for users on desktop and mobile devices.
 
 Django's built-in templates are used to render the HTML views dynamically, allowing for clean and maintainable code. JavaScript is utilized to enhance interactivity and handle client-side logic, while CSS ensures an attractive and consistent design.
+
+### How to run
+
+In order to install the application requirements, use the `requirements.txt` file as following:
+
+```bash
+pip install -r requirements.txt
+```
+
+In order to get the environment ready, run this command:
+
+```bash
+pipenv install django
+```
+
+Finally, in order to run the server e get the application operating, run the command:>
+
+```bash
+python manage.py runserver
+```
 
 ### Key Functionalities
 
@@ -104,26 +127,12 @@ The Transaction History enables users to track their financial behavior and offe
 
 ### Classes
 
+The project was made based on the following classes model:
+
 <p align="center">
 <img src="assets/classes.svg" style="border-radius:25px; height: auto; width: 800px;">
 </p>
 
----
+### References
 
-To install the application requirements:
-
-```bash
-pip install -r requirements.txt
-```
-
-To install django on the directory:
-
-```bash
-pipenv install django
-```
-
-To run the server
-
-```bash
-python manage.py runserver
-```
+<a href="https://www.djangoproject.com/">📚 Django Documentation</a>
