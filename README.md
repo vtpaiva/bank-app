@@ -10,15 +10,16 @@ MicroBank is a modern digital banking application that aims to provide a seamles
 
 ### Colaborators
 
+---
+
 * André Jacob Suaide - **13864673**
-
 * Henrique de Oliveira Araújo - **13863950**
-
 * Oliver Kenzo Kobayashi - **13676930**
-
 * Vítor Augusto Paiva de Brito - **13732303**
 
 ### Technology Stack
+
+---
 
 The MicroBank application is developed using modern, reliable, and widely adopted web development technologies.
 
@@ -29,6 +30,8 @@ The MicroBank application is developed using modern, reliable, and widely adopte
 Django's built-in templates are used to render the HTML views dynamically, allowing for clean and maintainable code. JavaScript is utilized to enhance interactivity and handle client-side logic, while CSS ensures an attractive and consistent design.
 
 ### How to run
+
+---
 
 In order to install the application requirements, use the `requirements.txt` file as following:
 
@@ -49,6 +52,8 @@ python manage.py runserver
 ```
 
 ### Key Functionalities
+
+---
 
 * #### **Deposit**
 
@@ -127,6 +132,8 @@ The Transaction History enables users to track their financial behavior and offe
 
 ### Classes
 
+---
+
 The project was made based on the following classes model:
 
 <p align="center">
@@ -134,5 +141,7 @@ The project was made based on the following classes model:
 </p>
 
 ### References
+
+---
 
 <a href="https://www.djangoproject.com/">📚 Django Documentation</a>
