@@ -1,21 +1,12 @@
 # Microbank Web Application
 
 <p align="center">
-<img src="assets/logo.png" style="border-radius:25px; height: auto; width: 400px;">
+<img src="https://i.imgur.com/ErH9BP1.png" style="height: auto; width: 400px;">
 </p>
 
 ## Overview
 
 ***MicroBank*** is a **modern digital banking application** that aims to provide a **seamless** and **user-friendly** financial experience. The platform allows users to manage their finances, execute a variety of financial transactions, and keep track of their activity history through an intuitive and interactive *web* interface. The main functionalities of ***MicroBank*** include **Deposits**, **Transfers**, **Investments**, **Insurance**, **Loans**, and a comprehensive **Transaction History**.
-
-### Colaborators
-
----
-
-* André Jacob Suaide - **13864673**
-* Henrique de Oliveira Araújo - **13863950**
-* Oliver Kenzo Kobayashi - **13676930**
-* Vítor Augusto Paiva de Brito - **13732303**
 
 ### Technology Stack
 
@@ -45,10 +36,16 @@ In order to get the environment ready, run this command:
 pipenv install django
 ```
 
-Finally, in order to run the server e get the application operating, run the command:>
+After, in order to run the server e get the application operating, run the command:>
 
 ```bash
 python manage.py runserver
+```
+
+Finally, the application will run on:
+
+```bash
+localhost:8000
 ```
 
 ### Key Functionalities
@@ -137,7 +134,7 @@ The Transaction History enables users to track their financial behavior and offe
 The project was made based on the following classes model:
 
 <p align="center">
-<img src="assets/classes.svg" style="border-radius:25px; height: auto; width: 800px;">
+<img src="https://i.imgur.com/0g71BpH.png" style="border-radius:25px; height: auto; width: 800px;">
 </p>
 
 ### References
